@@ -1,0 +1,12 @@
+{
+  "creators": [{"name": "Latipov, Aziz", "orcid": "0009-0003-8938-8223"}],
+  "license": "CC-BY-4.0",
+  "upload_type": "software",
+  "title": "tech-note-4: companion code for \"Debate Is Not Sampling\"",
+  "description": "Code, data manifest and pre-registration for the technical note \"Debate Is Not Sampling\" (https://alatip.github.io/debate-is-not-sampling/, DOI 10.5281/zenodo.23133060).",
+  "keywords": ["language model ensembles", "test-time scaling", "reproducibility"],
+  "related_identifiers": [
+    {"identifier": "https://alatip.github.io/debate-is-not-sampling/", "relation": "isSupplementTo", "scheme": "url", "resource_type": "publication-preprint"},
+    {"identifier": "10.5281/zenodo.23133060", "relation": "isSupplementTo", "scheme": "doi", "resource_type": "publication-preprint"}
+  ]
+}

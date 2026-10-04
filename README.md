@@ -9,6 +9,8 @@ three agents started wrong; what transfers is the correlation ceiling — the
 within-problem inter-agent ICC rises every round and the panel is one
 effective voter by round 3.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23133114.svg)](https://doi.org/10.5281/zenodo.23133114) — archived release v1.0. The note itself: [doi:10.5281/zenodo.23133060](https://doi.org/10.5281/zenodo.23133060).
+
 Order of reading, which is also the order the files were written in:
 
 1. `ALREADY-DONE.md` — prior-art check before anything was run.

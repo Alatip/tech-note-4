@@ -1,0 +1,28 @@
+
+debate_traces_vllm_q8b_thinkON_peer_r3_mt8192_n200  MV0=0.615
+  MV r0..3 : 0.615 0.660 0.655 0.655   agent: 0.623 0.668 0.660 0.658
+  ICC r0..3: 0.724 0.888 0.963 0.971   unanimity: 0.715 0.890 0.945 0.970
+  S-_3-0 n= 51 majority-correct r0..3: 0.000 0.059 0.078 0.098
+  S-_2-1 n= 15 majority-correct r0..3: 0.000 0.400 0.400 0.400
+  S+_2-1 n= 17 majority-correct r0..3: 1.000 0.765 0.588 0.588
+
+debate_traces_vllm_q8b_thinkON_self_r3_mt8192_n200  MV0=0.665
+  MV r0..3 : 0.665 0.680 0.680 0.680   agent: 0.660 0.698 0.697 0.698
+  ICC r0..3: 0.726 0.724 0.733 0.740   unanimity: 0.680 0.730 0.735 0.740
+  S-_3-0 n= 46 majority-correct r0..3: 0.000 0.043 0.043 0.043
+  S-_2-1 n=  9 majority-correct r0..3: 0.000 0.000 0.000 0.000
+  S+_2-1 n= 20 majority-correct r0..3: 1.000 0.900 0.900 0.900
+
+debate_traces_vllm_q8b_thinkOFF_peer_r3_mt8192_n200  MV0=0.630
+  MV r0..3 : 0.630 0.670 0.675 0.665   agent: 0.593 0.652 0.662 0.667
+  ICC r0..3: 0.587 0.847 0.911 0.948   unanimity: 0.555 0.810 0.880 0.930
+  S-_3-0 n= 46 majority-correct r0..3: 0.000 0.000 0.022 0.000
+  S-_2-1 n=  8 majority-correct r0..3: 0.000 0.500 0.500 0.500
+  S+_2-1 n= 41 majority-correct r0..3: 1.000 0.927 0.927 0.927
+
+debate_traces_vllm_q8b_thinkOFF_self_r3_mt8192_n200  MV0=0.605
+  MV r0..3 : 0.605 0.615 0.620 0.615   agent: 0.590 0.598 0.600 0.597
+  ICC r0..3: 0.650 0.668 0.654 0.662   unanimity: 0.595 0.600 0.595 0.600
+  S-_3-0 n= 49 majority-correct r0..3: 0.000 0.000 0.000 0.000
+  S-_2-1 n= 10 majority-correct r0..3: 0.000 0.000 0.100 0.100
+  S+_2-1 n= 30 majority-correct r0..3: 1.000 1.000 1.000 0.967

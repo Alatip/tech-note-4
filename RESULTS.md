@@ -1,0 +1,195 @@
+# Results — modal ceiling and n_eff in multi-round debate
+
+Run 2026-10-04 with `run.py` (numpy only; 15 s). Protocol and falsification
+criteria: PREDICTION.md, committed (51ecb8a) before the first run. Raw
+numbers: `results/*.json`, `results/run.log`; all tables below are rendered
+by `tables.py` into `results/tables.md` and copied from there. Data:
+DebateLedger open tier (CC-BY 4.0), see data/README.md. Zero LLM inference
+was spent; zero cloud spend.
+
+Two post-hoc additions, made after the pre-registered results were seen and
+labelled as such: `posthoc.py` (split of the wrong-mode stratum by whether a
+correct minority existed at round 0) and `control.py` (peer debate vs
+self-only revision on the same model and questions, two extra DebateLedger
+files downloaded for it).
+
+**Sanity check passed:** loader reproduces DebateLedger's 6,925 debates and
+exactly 253 collapses. Our plurality with their alphabetical tie-break
+disagrees with their stored `majority` field on 18 of ~27,700 round
+majorities (0.07%; their None handling differs in edge cases); ignored.
+
+## Headline
+
+1. **H1 (modal ceiling) — FALSIFIED in the "debate beats the ceiling"
+   direction.** Final majority accuracy exceeds the round-0 modal-hit rate
+   by more than +0.03 (CI entirely above) on 3 of 6 primary files; within
+   ±0.03 on only 1 of 6. The excess is largest where round-0 accuracy is
+   lowest (across 16 files r(MV0, D1) = −0.74). Across-model tracking is
+   r = 0.895 (criterion 0.9), slope 0.65.
+2. **H2 (per-problem anti-scaling) — FALSIFIED.** On problems whose round-0
+   mode is wrong, per-agent accuracy from round 1 to round 3 never falls:
+   D2 ≥ 0 on all 16 files, significantly positive on 3/6 primary files
+   (Phi-4-mini +0.018, Qwen3-4B +0.115, Qwen3-8B +0.125). The correction
+   rate on that stratum also rises. Refinement is self-correcting, not modal.
+3. **H3a (ρ rises, n_eff shrinks) — CONFIRMED 6/6** (and on all 16 files):
+   ICC of agent correctness within a problem rises from 0.48–0.91 at round 0
+   to 0.62–0.99 at round 3; n_eff of a 3-agent panel falls from 1.06–1.53 to
+   1.01–1.34. Self-only control (agent sees only its own prior answer): ICC
+   flat (0.72→0.74, 0.65→0.66), so the rise is peer-induced. This replicates
+   Ringelmann 2606.02646 with B's ANOVA estimator on public data.
+4. **H3b (n_eff-plateau stopping rule) — NOT SUPPORTED as pre-registered.**
+   At ε = 0.05 the cohort-level rule never stops before round 3 on 3/6
+   primary files (ICC is still climbing at round 3 on the weak models); where
+   it stops it loses ≤ 0.005. The per-problem **unanimity** rule is the
+   practical winner on every file: within −0.015 of fixed-3 accuracy at
+   1.02–1.95 rounds, and above fixed-3 on 3 files.
+
+## T1 — per file: majority accuracy by round, H1, H2, H3
+
+| group | file | n | MV0 | MV1 | MV2 | MV3 | D1 = MV3−MV0 [CI] | n(S−) | D2 = A3−A1 on S− [CI] | D2c = MV3−MV1 on S− [CI] | ICC0 | ICC3 | ΔICC [CI] | n_eff0→3 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| P | gemini_3-flash | 200 | 0.845 | 0.855 | 0.855 | 0.855 | +0.010 [+0.000, +0.025] | 27 | +0.000 [+0.000, +0.000] | +0.000 [+0.000, +0.000] | 0.914 | 0.987 | +0.073 [+0.023, +0.142] | 1.06→1.01 |
+| P | openai_gpt-5.4-mini | 200 | 0.705 | 0.745 | 0.750 | 0.755 | +0.050 [+0.020, +0.085] | 48 | +0.021 [-0.013, +0.058] | +0.021 [+0.000, +0.070] | 0.736 | 0.946 | +0.210 [+0.140, +0.292] | 1.21→1.04 |
+| P | vllm_llama-3.1-8b | 2003 | 0.468 | 0.497 | 0.496 | 0.496 | +0.028 [+0.014, +0.041] | 688 | +0.003 [-0.007, +0.014] | +0.006 [-0.009, +0.020] | 0.504 | 0.615 | +0.112 [+0.088, +0.135] | 1.49→1.34 |
+| P | vllm_phi-4-mini | 2161 | 0.468 | 0.510 | 0.530 | 0.531 | +0.063 [+0.049, +0.078] | 720 | +0.018 [+0.004, +0.032] | +0.035 [+0.014, +0.056] | 0.517 | 0.812 | +0.295 [+0.267, +0.324] | 1.48→1.14 |
+| P | vllm_qwen3-4b | 2161 | 0.435 | 0.581 | 0.626 | 0.640 | +0.205 [+0.185, +0.224] | 979 | +0.115 [+0.097, +0.133] | +0.115 [+0.093, +0.138] | 0.646 | 0.920 | +0.274 [+0.246, +0.303] | 1.31→1.06 |
+| P | vllm_qwen3-8b | 200 | 0.245 | 0.495 | 0.595 | 0.620 | +0.375 [+0.305, +0.445] | 125 | +0.125 [+0.076, +0.176] | +0.152 [+0.087, +0.220] | 0.479 | 0.853 | +0.374 [+0.255, +0.492] | 1.53→1.11 |
+| R1-hetero | hetero_dsv4f_msl4_local4b | 200 | 0.675 | 0.710 | 0.705 | 0.710 | +0.035 [+0.000, +0.070] | 37 | +0.000 [-0.026, +0.027] | +0.000 [+0.000, +0.000] | 0.372 | 0.760 | +0.388 [+0.299, +0.489] | 1.72→1.19 |
+| R1-hetero | hetero_dsv4f_msl4_scout | 200 | 0.765 | 0.805 | 0.805 | 0.805 | +0.040 [+0.005, +0.080] | 27 | +0.049 [+0.010, +0.100] | +0.037 [+0.000, +0.120] | 0.469 | 0.750 | +0.281 [+0.184, +0.381] | 1.55→1.20 |
+| R1-hetero | hetero_msl4_llama70b_dsv4f | 200 | 0.695 | 0.780 | 0.790 | 0.805 | +0.110 [+0.065, +0.155] | 35 | +0.057 [+0.011, +0.111] | +0.057 [+0.000, +0.143] | 0.421 | 0.779 | +0.357 [+0.258, +0.449] | 1.63→1.17 |
+| R2-gsm8k | gsm8k_llama_4_scout | 300 | 0.960 | 0.963 | 0.963 | 0.957 | -0.003 [-0.010, +0.000] | 9 | +0.000 [+0.000, +0.000] | +0.000 [+0.000, +0.000] | 0.451 | 0.776 | +0.325 [+0.133, +0.517] | 1.58→1.18 |
+| R2-gsm8k | gsm8k_local_qwen3_4b | 299 | 0.953 | 0.960 | 0.960 | 0.957 | +0.003 [-0.010, +0.017] | 11 | +0.091 [+0.000, +0.238] | +0.091 [+0.000, +0.300] | 0.647 | 0.944 | +0.296 [+0.166, +0.481] | 1.31→1.04 |
+| R2-gsm8k | gsm8k_mistral_small_4 | 300 | 0.960 | 0.967 | 0.967 | 0.970 | +0.010 [-0.003, +0.027] | 11 | +0.121 [+0.000, +0.222] | +0.000 [+0.000, +0.000] | 0.599 | 0.961 | +0.362 [+0.173, +0.606] | 1.36→1.03 |
+| R3-think | vllm_q32b_thinkOFF | 200 | 0.605 | 0.655 | 0.670 | 0.660 | +0.055 [+0.025, +0.090] | 61 | +0.044 [+0.012, +0.088] | +0.016 [+0.000, +0.053] | 0.624 | 0.888 | +0.265 [+0.195, +0.345] | 1.33→1.08 |
+| R3-think | vllm_q32b_thinkON | 200 | 0.670 | 0.675 | 0.670 | 0.670 | +0.000 [-0.035, +0.030] | 56 | -0.006 [-0.032, +0.020] | +0.000 [+0.000, +0.000] | 0.692 | 0.867 | +0.175 [+0.102, +0.253] | 1.26→1.10 |
+| R3-think | vllm_q8b_thinkOFF | 200 | 0.630 | 0.670 | 0.675 | 0.665 | +0.035 [+0.000, +0.070] | 54 | +0.006 [+0.000, +0.021] | +0.000 [+0.000, +0.000] | 0.587 | 0.948 | +0.361 [+0.278, +0.446] | 1.38→1.04 |
+| R3-think | vllm_q8b_thinkON | 200 | 0.615 | 0.660 | 0.655 | 0.655 | +0.040 [-0.005, +0.090] | 66 | +0.000 [-0.034, +0.042] | +0.030 [+0.000, +0.079] | 0.724 | 0.971 | +0.246 [+0.170, +0.327] | 1.23→1.02 |
+
+CIs: cluster bootstrap over question_id, B = 2,000, percentile. S− = problems
+whose round-0 plurality is a wrong letter; D2 compares rounds 3 and 1 (round
+0 is excluded because conditioning on it depresses A_0(S−) by construction).
+
+## T2 — stopping rules (majority accuracy at stop / mean rounds)
+
+| group | file | fixed-1 | fixed-3 | unanimity (r≥1) | n_eff ε=0.02 | ε=0.05 | ε=0.10 | oracle best round |
+|---|---|---|---|---|---|---|---|---|
+| P | gemini_3-flash | 0.855 / 1.00 | 0.855 / 3.00 | 0.855 / 1.07 | 0.855 / 2.00 | 0.855 / 1.00 | 0.855 / 1.00 | 0.855 |
+| P | openai_gpt-5.4-mini | 0.745 / 1.00 | 0.755 / 3.00 | 0.755 / 1.17 | 0.755 / 3.00 | 0.750 / 2.00 | 0.750 / 2.00 | 0.755 |
+| P | vllm_llama-3.1-8b | 0.497 / 1.00 | 0.496 / 3.00 | 0.499 / 1.95 | 0.496 / 2.00 | 0.496 / 2.00 | 0.496 / 2.00 | 0.528 |
+| P | vllm_phi-4-mini | 0.510 / 1.00 | 0.531 / 3.00 | 0.534 / 1.68 | 0.531 / 3.00 | 0.531 / 3.00 | 0.530 / 2.00 | 0.571 |
+| P | vllm_qwen3-4b | 0.581 / 1.00 | 0.640 / 3.00 | 0.625 / 1.37 | 0.640 / 3.00 | 0.640 / 3.00 | 0.626 / 2.00 | 0.660 |
+| P | vllm_qwen3-8b | 0.495 / 1.00 | 0.620 / 3.00 | 0.610 / 1.57 | 0.620 / 3.00 | 0.620 / 3.00 | 0.620 / 3.00 | 0.645 |
+| R1-hetero | hetero_dsv4f_msl4_local4b | 0.710 / 1.00 | 0.710 / 3.00 | 0.710 / 1.50 | 0.710 / 3.00 | 0.705 / 2.00 | 0.705 / 2.00 | 0.720 |
+| R1-hetero | hetero_dsv4f_msl4_scout | 0.805 / 1.00 | 0.805 / 3.00 | 0.810 / 1.40 | 0.805 / 3.00 | 0.805 / 3.00 | 0.805 / 2.00 | 0.820 |
+| R1-hetero | hetero_msl4_llama70b_dsv4f | 0.780 / 1.00 | 0.805 / 3.00 | 0.805 / 1.35 | 0.805 / 3.00 | 0.805 / 3.00 | 0.790 / 2.00 | 0.805 |
+| R2-gsm8k | gsm8k_llama_4_scout | 0.963 / 1.00 | 0.957 / 3.00 | 0.960 / 1.04 | 0.963 / 2.00 | 0.963 / 2.00 | 0.963 / 2.00 | 0.963 |
+| R2-gsm8k | gsm8k_local_qwen3_4b | 0.960 / 1.00 | 0.957 / 3.00 | 0.957 / 1.05 | 0.960 / 2.00 | 0.960 / 2.00 | 0.960 / 2.00 | 0.963 |
+| R2-gsm8k | gsm8k_mistral_small_4 | 0.967 / 1.00 | 0.970 / 3.00 | 0.967 / 1.02 | 0.970 / 3.00 | 0.970 / 3.00 | 0.967 / 2.00 | 0.970 |
+| R3-think | vllm_q32b_thinkOFF | 0.655 / 1.00 | 0.660 / 3.00 | 0.655 / 1.39 | 0.660 / 3.00 | 0.670 / 2.00 | 0.670 / 2.00 | 0.675 |
+| R3-think | vllm_q32b_thinkON | 0.675 / 1.00 | 0.670 / 3.00 | 0.670 / 1.40 | 0.670 / 2.00 | 0.670 / 2.00 | 0.670 / 2.00 | 0.675 |
+| R3-think | vllm_q8b_thinkOFF | 0.670 / 1.00 | 0.665 / 3.00 | 0.665 / 1.30 | 0.665 / 3.00 | 0.665 / 3.00 | 0.675 / 2.00 | 0.680 |
+| R3-think | vllm_q8b_thinkON | 0.660 / 1.00 | 0.655 / 3.00 | 0.650 / 1.16 | 0.655 / 3.00 | 0.655 / 3.00 | 0.655 / 2.00 | 0.675 |
+
+## T3 — POST-HOC: where do corrections come from?
+
+Majority-correct rate by round, problems split by round-0 state.
+S−/3-0 = all three agents wrong at round 0 (no correct minority to be
+persuaded by); S−/2-1 = one correct agent; S+/2-1 = two correct (collapse
+risk); S0 = three different answers.
+
+| group | file | n S−/3-0 | corrected r1 / r2 / r3 [CI r3] | n S−/2-1 | corrected r1 / r2 / r3 [CI r3] | n S+/2-1 | still correct r1 / r2 / r3 | n S0 | correct r1 / r2 / r3 |
+|---|---|---|---|---|---|---|---|---|---|
+| P | gemini_3-flash | 26 | 0.038 / 0.038 / 0.038 [0.00, 0.13] | 1 | 1.000 / 1.000 / 1.000 [1.00, 1.00] | 5 | 1.000 / 1.000 / 1.000 | 4 | 0.000 / 0.000 / 0.000 |
+| P | openai_gpt-5.4-mini | 39 | 0.026 / 0.026 / 0.026 [0.00, 0.09] | 9 | 0.333 / 0.333 / 0.444 [0.12, 0.83] | 16 | 1.000 / 1.000 / 1.000 | 11 | 0.364 / 0.455 / 0.455 |
+| P | vllm_llama-3.1-8b | 524 | 0.010 / 0.011 / 0.011 [0.00, 0.02] | 164 | 0.213 / 0.195 / 0.232 [0.17, 0.30] | 339 | 0.897 / 0.885 / 0.861 | 378 | 0.161 / 0.183 / 0.193 |
+| P | vllm_phi-4-mini | 558 | 0.030 / 0.048 / 0.047 [0.03, 0.07] | 162 | 0.210 / 0.290 / 0.309 [0.24, 0.38] | 373 | 0.874 / 0.861 / 0.847 | 429 | 0.214 / 0.277 / 0.294 |
+| P | vllm_qwen3-4b | 793 | 0.180 / 0.279 / 0.308 [0.28, 0.34] | 186 | 0.570 / 0.629 / 0.634 [0.57, 0.70] | 247 | 0.850 / 0.862 / 0.862 | 242 | 0.446 / 0.483 / 0.508 |
+| P | vllm_qwen3-8b | 110 | 0.282 / 0.436 / 0.445 [0.36, 0.54] | 15 | 0.733 / 0.800 / 0.800 [0.57, 1.00] | 29 | 0.966 / 0.966 / 0.966 | 26 | 0.346 / 0.423 / 0.577 |
+| R1-hetero | hetero_dsv4f_msl4_local4b | 24 | 0.000 / 0.000 / 0.000 [0.00, 0.00] | 13 | 0.000 / 0.000 / 0.000 [0.00, 0.00] | 54 | 0.944 / 0.926 / 0.926 | 28 | 0.357 / 0.357 / 0.393 |
+| R1-hetero | hetero_dsv4f_msl4_scout | 17 | 0.000 / 0.000 / 0.000 [0.00, 0.00] | 10 | 0.300 / 0.300 / 0.400 [0.09, 0.71] | 42 | 0.976 / 0.952 / 0.952 | 20 | 0.300 / 0.350 / 0.350 |
+| R1-hetero | hetero_msl4_llama70b_dsv4f | 23 | 0.000 / 0.043 / 0.043 [0.00, 0.15] | 12 | 0.583 / 0.583 / 0.667 [0.37, 0.92] | 46 | 0.935 / 0.957 / 0.957 | 26 | 0.500 / 0.500 / 0.577 |
+| R2-gsm8k | gsm8k_llama_4_scout | 5 | 0.000 / 0.000 / 0.000 [0.00, 0.00] | 4 | 0.000 / 0.000 / 0.000 [0.00, 0.00] | 17 | 1.000 / 1.000 / 0.941 | 3 | 0.333 / 0.333 / 0.000 |
+| R2-gsm8k | gsm8k_local_qwen3_4b | 9 | 0.000 / 0.000 / 0.000 [0.00, 0.00] | 2 | 0.500 / 1.000 / 1.000 [1.00, 1.00] | 13 | 0.923 / 0.923 / 0.846 | 3 | 0.667 / 0.333 / 0.333 |
+| R2-gsm8k | gsm8k_mistral_small_4 | 6 | 0.000 / 0.000 / 0.000 [0.00, 0.00] | 5 | 0.600 / 0.600 / 0.600 [0.00, 1.00] | 9 | 0.778 / 0.778 / 0.889 | 1 | 1.000 / 1.000 / 1.000 |
+| R3-think | vllm_q32b_thinkOFF | 45 | 0.000 / 0.022 / 0.022 [0.00, 0.07] | 16 | 0.375 / 0.375 / 0.375 [0.13, 0.62] | 26 | 1.000 / 0.962 / 0.962 | 18 | 0.222 / 0.389 / 0.278 |
+| R3-think | vllm_q32b_thinkON | 46 | 0.000 / 0.000 / 0.000 [0.00, 0.00] | 10 | 0.200 / 0.200 / 0.200 [0.00, 0.50] | 26 | 0.846 / 0.808 / 0.808 | 10 | 0.300 / 0.300 / 0.300 |
+| R3-think | vllm_q8b_thinkOFF | 46 | 0.000 / 0.022 / 0.000 [0.00, 0.00] | 8 | 0.500 / 0.500 / 0.500 [0.14, 0.88] | 41 | 0.927 / 0.927 / 0.927 | 20 | 0.350 / 0.350 / 0.300 |
+| R3-think | vllm_q8b_thinkON | 51 | 0.059 / 0.078 / 0.098 [0.02, 0.19] | 15 | 0.400 / 0.400 / 0.400 [0.16, 0.67] | 17 | 0.765 / 0.588 / 0.588 | 11 | 0.455 / 0.545 / 0.455 |
+
+Across 16 files: Pearson r(MV0, D1) = −0.740; D1 ≈ +0.303 −0.354·MV0.
+
+## T4 — POST-HOC control: peer debate vs self-only revision, Qwen3-8B
+
+Same model, same 200 MMLU-Pro questions, same 3 rounds; in `self` each
+agent sees only its own previous answer (DebateLedger's self_only runs).
+
+| run | MV0 | MV3 | ΔMV | agent acc 0→3 | ICC0 | ICC3 | unanimity 0→3 | S−/3-0 corrected r3 (n) | S−/2-1 corrected r3 (n) | S+/2-1 kept r3 (n) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| thinkON_peer | 0.615 | 0.655 | +0.040 | 0.623→0.658 | 0.724 | 0.971 | 0.715→0.970 | 0.098 (51) | 0.400 (15) | 0.588 (17) |
+| thinkON_self | 0.665 | 0.680 | +0.015 | 0.660→0.698 | 0.726 | 0.740 | 0.680→0.740 | 0.043 (46) | 0.000 (9) | 0.900 (20) |
+| thinkOFF_peer | 0.630 | 0.665 | +0.035 | 0.593→0.667 | 0.587 | 0.948 | 0.555→0.930 | 0.000 (46) | 0.500 (8) | 0.927 (41) |
+| thinkOFF_self | 0.605 | 0.615 | +0.010 | 0.590→0.597 | 0.650 | 0.662 | 0.595→0.600 | 0.000 (49) | 0.100 (10) | 0.967 (30) |
+
+## Verdict against the pre-registered criteria
+
+| hypothesis | criterion | count (of 6 primary) | verdict |
+|---|---|---|---|
+| H1 holds | D1 CI within ±0.03 on ≥4/6 and r ≥ 0.9 | 1/6; r = 0.895 | no |
+| H1 falsified upward | D1 CI entirely > +0.03 on ≥3/6 | 3/6 (Phi, Qwen3-4B, Qwen3-8B) | **falsified: debate beats the round-0 mode** |
+| H2 holds | D2 CI < 0 on ≥4/6 and D2c not > 0 on ≥4/6 | 0/6; 3/6 | no |
+| H2 falsified | D2 CI > 0 on ≥3/6 | 3/6 | **falsified: no anti-scaling** |
+| H3a | ICC monotone on ≥5/6; ΔICC CI > 0 on ≥4/6 | 6/6; 6/6 | **confirmed** |
+| H3b | n_eff-plateau (ε=0.05) within −0.01 of fixed-3 at ≤2 rounds on ≥4/6 | 3/6 ok, 3/6 never stop | not supported |
+
+## Reading
+
+- **B's modal ceiling does not transfer to refinement, and the reason is
+  B's own assumption.** The ceiling needs exchangeable draws from a fixed
+  per-problem answer distribution; then plurality can only find the mode.
+  In debate the distribution itself moves between rounds: agents re-reason
+  conditioned on peers, and on weak models they move toward the right
+  answer even when nobody had it (T3, S−/3-0: Qwen3-4B 0 → 31% majority-
+  correct, Qwen3-8B 0 → 45%, Phi 0 → 5%). That is re-sampling with a
+  changed prompt, not aggregation, so π_mode of round 0 is not conserved
+  and is not a ceiling. On strong models and on GSM8K the ceiling holds
+  numerically (D1 within ±0.03) because there is almost nothing left to
+  correct, not because the mechanism is modal.
+- **What does transfer is the correlation ceiling.** Rounds raise the
+  within-problem inter-agent ICC toward 1 and push n_eff of the panel to
+  1.0–1.3 by round 3 (T1). After that the panel is one voter: more agents
+  or more rounds cannot add votes, only re-samples. The self-only control
+  (T4) pins the ICC rise on peer visibility (0.72→0.97 peer vs 0.72→0.74
+  self), which replicates Ringelmann 2606.02646. The practical corollary
+  for A's Δr question: the marginal value of a round is readable from
+  ΔICC without labels, but on weak models it had not plateaued by round 3,
+  so a plateau rule fires late; unanimity per problem is the rule that
+  actually saves rounds (T2: 1.0–1.95 rounds at ≤ −0.015 accuracy).
+- **Collapses are real but small** (T3, S+/2-1: 4–15% of two-vs-one correct
+  panels lose the correct majority on weak models; 41% on q8b thinkON, n=17)
+  and are outnumbered by corrections wherever round-0 accuracy is low.
+  Net debate gain scales inversely with round-0 accuracy (r = −0.74).
+
+## Limitations
+
+- **Primary Qwen3-8B row is anomalous.** Its round-0 majority accuracy is
+  0.245, while the same model in the R3 runs scores 0.615–0.630 at round 0
+  (DebateLedger's own table lists this row at 28%). Round 0 was probably
+  under-elicited (configuration or truncation; no text in the open tier to
+  check). Without that file the upward falsification of H1 rests on
+  Phi-4-mini (+0.063) and Qwen3-4B (+0.205) with GPT-5.4-mini (+0.050, CI
+  touching 0.03) — 2 of 5 files entirely above +0.03, i.e. "not within,
+  not formally falsified"; H2's falsification still stands (Phi, Qwen3-4B).
+- Round 0 vs rounds 1–3 differ in prompt (no peer block vs peer block), so
+  part of the round-1 jump may be an elicitation effect rather than peer
+  information; the self-only control shows the self-revision share is
+  +0.010 to +0.015 of majority accuracy on Qwen3-8B. A generation-matched
+  independent re-sample control does not exist in this data.
+- 3 homogeneous agents, MCQ letters; TUMIX has 15 heterogeneous tool agents
+  and an LLM judge. The heterogeneous panels here (3 × 200) behave like the
+  strong homogeneous ones (small D1, S−/3-0 never corrected).
+- Three rounds only, so "plateau" can be detected at round 2 or 3 at best.
+- Gold labels and parsed letters are DebateLedger's; 0.07% majority
+  disagreements with their stored fields were not investigated.
+- The pre-registered H1 was reformulated from the judge's statement (the
+  per-round "MV tracks π_mode" is an identity for a single 3-agent panel);
+  the reformulation is in PREDICTION.md, committed before the run.

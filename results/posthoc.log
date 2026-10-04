@@ -1,0 +1,115 @@
+
+[P] debate_traces_gemini_3-flash n=200
+  S-_3-0  n=   26  agent acc r0..3: 0.000 0.038 0.038 0.038   majority-correct r0..3: 0.000 0.038 0.038 0.038   MV3 CI [0.000, 0.125]
+  S-_2-1  n=    1  agent acc r0..3: 0.333 1.000 1.000 1.000   majority-correct r0..3: 0.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S+_2-1  n=    5  agent acc r0..3: 0.667 0.867 0.867 0.933   majority-correct r0..3: 1.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S+_3-0  n=  164  agent acc r0..3: 1.000 1.000 1.000 1.000   majority-correct r0..3: 1.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S0      n=    4  agent acc r0..3: 0.083 0.083 0.000 0.000   majority-correct r0..3: 0.000 0.000 0.000 0.000   MV3 CI [0.000, 0.000]
+
+[P] debate_traces_openai_gpt-5.4-mini n=200
+  S-_3-0  n=   39  agent acc r0..3: 0.000 0.017 0.026 0.026   majority-correct r0..3: 0.000 0.026 0.026 0.026   MV3 CI [0.000, 0.089]
+  S-_2-1  n=    9  agent acc r0..3: 0.333 0.370 0.407 0.444   majority-correct r0..3: 0.000 0.333 0.333 0.444   MV3 CI [0.125, 0.833]
+  S+_2-1  n=   16  agent acc r0..3: 0.667 0.979 0.979 0.979   majority-correct r0..3: 1.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S+_3-0  n=  125  agent acc r0..3: 1.000 1.000 0.997 0.997   majority-correct r0..3: 1.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S0      n=   11  agent acc r0..3: 0.242 0.424 0.485 0.515   majority-correct r0..3: 0.000 0.364 0.455 0.455   MV3 CI [0.154, 0.778]
+
+[P] debate_traces_vllm_llama-3.1-8b n=2003
+  S-_3-0  n=  524  agent acc r0..3: 0.000 0.025 0.027 0.027   majority-correct r0..3: 0.000 0.010 0.011 0.011   MV3 CI [0.004, 0.021]
+  S-_2-1  n=  164  agent acc r0..3: 0.333 0.337 0.341 0.343   majority-correct r0..3: 0.000 0.213 0.195 0.232   MV3 CI [0.168, 0.298]
+  S+_2-1  n=  339  agent acc r0..3: 0.667 0.738 0.733 0.729   majority-correct r0..3: 1.000 0.897 0.885 0.861   MV3 CI [0.825, 0.897]
+  S+_3-0  n=  579  agent acc r0..3: 1.000 0.983 0.974 0.966   majority-correct r0..3: 1.000 0.993 0.986 0.983   MV3 CI [0.971, 0.992]
+  S0      n=  378  agent acc r0..3: 0.195 0.250 0.257 0.260   majority-correct r0..3: 0.000 0.161 0.183 0.193   MV3 CI [0.153, 0.234]
+
+[P] debate_traces_vllm_phi-4-mini n=2161
+  S-_3-0  n=  558  agent acc r0..3: 0.000 0.044 0.056 0.061   majority-correct r0..3: 0.000 0.030 0.048 0.047   MV3 CI [0.030, 0.066]
+  S-_2-1  n=  162  agent acc r0..3: 0.333 0.315 0.331 0.335   majority-correct r0..3: 0.000 0.210 0.290 0.309   MV3 CI [0.240, 0.383]
+  S+_2-1  n=  373  agent acc r0..3: 0.667 0.793 0.815 0.811   majority-correct r0..3: 1.000 0.874 0.861 0.847   MV3 CI [0.810, 0.882]
+  S+_3-0  n=  637  agent acc r0..3: 1.000 0.991 0.979 0.974   majority-correct r0..3: 1.000 0.992 0.989 0.986   MV3 CI [0.976, 0.994]
+  S0      n=  429  agent acc r0..3: 0.190 0.249 0.282 0.294   majority-correct r0..3: 0.000 0.214 0.277 0.294   MV3 CI [0.254, 0.337]
+
+[P] debate_traces_vllm_qwen3-4b n=2161
+  S-_3-0  n=  793  agent acc r0..3: 0.000 0.190 0.279 0.317   majority-correct r0..3: 0.000 0.180 0.279 0.308   MV3 CI [0.275, 0.339]
+  S-_2-1  n=  186  agent acc r0..3: 0.333 0.570 0.620 0.634   majority-correct r0..3: 0.000 0.570 0.629 0.634   MV3 CI [0.566, 0.703]
+  S+_2-1  n=  247  agent acc r0..3: 0.667 0.842 0.861 0.862   majority-correct r0..3: 1.000 0.850 0.862 0.862   MV3 CI [0.816, 0.905]
+  S+_3-0  n=  689  agent acc r0..3: 1.000 0.990 0.988 0.987   majority-correct r0..3: 1.000 0.993 0.988 0.988   MV3 CI [0.979, 0.996]
+  S0      n=  242  agent acc r0..3: 0.179 0.431 0.481 0.503   majority-correct r0..3: 0.000 0.446 0.483 0.508   MV3 CI [0.446, 0.573]
+
+[P] debate_traces_vllm_qwen3-8b n=200
+  S-_3-0  n=  110  agent acc r0..3: 0.000 0.309 0.433 0.442   majority-correct r0..3: 0.000 0.282 0.436 0.445   MV3 CI [0.355, 0.538]
+  S-_2-1  n=   15  agent acc r0..3: 0.333 0.733 0.800 0.800   majority-correct r0..3: 0.000 0.733 0.800 0.800   MV3 CI [0.571, 1.000]
+  S+_2-1  n=   29  agent acc r0..3: 0.667 0.920 0.943 0.954   majority-correct r0..3: 1.000 0.966 0.966 0.966   MV3 CI [0.885, 1.000]
+  S+_3-0  n=   20  agent acc r0..3: 1.000 1.000 1.000 1.000   majority-correct r0..3: 1.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S0      n=   26  agent acc r0..3: 0.179 0.397 0.449 0.538   majority-correct r0..3: 0.000 0.346 0.423 0.577   MV3 CI [0.375, 0.760]
+
+[R1-hetero] debate_traces_hetero_dsv4f_msl4_local4b_n200 n=200
+  S-_3-0  n=   24  agent acc r0..3: 0.000 0.014 0.014 0.014   majority-correct r0..3: 0.000 0.000 0.000 0.000   MV3 CI [0.000, 0.000]
+  S-_2-1  n=   13  agent acc r0..3: 0.333 0.282 0.282 0.282   majority-correct r0..3: 0.000 0.000 0.000 0.000   MV3 CI [0.000, 0.000]
+  S+_2-1  n=   54  agent acc r0..3: 0.667 0.926 0.932 0.932   majority-correct r0..3: 1.000 0.944 0.926 0.926   MV3 CI [0.842, 0.983]
+  S+_3-0  n=   81  agent acc r0..3: 1.000 1.000 0.992 1.000   majority-correct r0..3: 1.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S0      n=   28  agent acc r0..3: 0.238 0.369 0.405 0.429   majority-correct r0..3: 0.000 0.357 0.357 0.393   MV3 CI [0.214, 0.577]
+
+[R1-hetero] debate_traces_hetero_dsv4f_msl4_scout_n200 n=200
+  S-_3-0  n=   17  agent acc r0..3: 0.000 0.000 0.000 0.000   majority-correct r0..3: 0.000 0.000 0.000 0.000   MV3 CI [0.000, 0.000]
+  S-_2-1  n=   10  agent acc r0..3: 0.333 0.267 0.367 0.400   majority-correct r0..3: 0.000 0.300 0.300 0.400   MV3 CI [0.091, 0.714]
+  S+_2-1  n=   42  agent acc r0..3: 0.667 0.833 0.865 0.889   majority-correct r0..3: 1.000 0.976 0.952 0.952   MV3 CI [0.878, 1.000]
+  S+_3-0  n=  111  agent acc r0..3: 1.000 0.991 0.991 0.982   majority-correct r0..3: 1.000 1.000 1.000 0.991   MV3 CI [0.970, 1.000]
+  S0      n=   20  agent acc r0..3: 0.183 0.283 0.367 0.383   majority-correct r0..3: 0.000 0.300 0.350 0.350   MV3 CI [0.136, 0.562]
+
+[R1-hetero] debate_traces_hetero_msl4_llama70b_dsv4f_n200 n=200
+  S-_3-0  n=   23  agent acc r0..3: 0.000 0.014 0.029 0.043   majority-correct r0..3: 0.000 0.000 0.043 0.043   MV3 CI [0.000, 0.148]
+  S-_2-1  n=   12  agent acc r0..3: 0.333 0.528 0.583 0.639   majority-correct r0..3: 0.000 0.583 0.583 0.667   MV3 CI [0.375, 0.923]
+  S+_2-1  n=   46  agent acc r0..3: 0.667 0.884 0.935 0.920   majority-correct r0..3: 1.000 0.935 0.957 0.957   MV3 CI [0.889, 1.000]
+  S+_3-0  n=   93  agent acc r0..3: 1.000 0.996 0.993 0.993   majority-correct r0..3: 1.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S0      n=   26  agent acc r0..3: 0.244 0.500 0.513 0.577   majority-correct r0..3: 0.000 0.500 0.500 0.577   MV3 CI [0.385, 0.762]
+
+[R2-gsm8k] debate_traces_gsm8k_llama_4_scout_n300 n=300
+  S-_3-0  n=    5  agent acc r0..3: 0.000 0.000 0.000 0.000   majority-correct r0..3: 0.000 0.000 0.000 0.000   MV3 CI [0.000, 0.000]
+  S-_2-1  n=    4  agent acc r0..3: 0.333 0.000 0.000 0.000   majority-correct r0..3: 0.000 0.000 0.000 0.000   MV3 CI [0.000, 0.000]
+  S+_2-1  n=   17  agent acc r0..3: 0.667 0.941 0.961 0.941   majority-correct r0..3: 1.000 1.000 1.000 0.941   MV3 CI [0.800, 1.000]
+  S+_3-0  n=  271  agent acc r0..3: 1.000 0.995 0.993 0.989   majority-correct r0..3: 1.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S0      n=    3  agent acc r0..3: 0.333 0.222 0.222 0.111   majority-correct r0..3: 0.000 0.333 0.333 0.000   MV3 CI [0.000, 0.000]
+
+[R2-gsm8k] debate_traces_gsm8k_local_qwen3_4b_n300 n=299
+  S-_3-0  n=    9  agent acc r0..3: 0.000 0.000 0.000 0.000   majority-correct r0..3: 0.000 0.000 0.000 0.000   MV3 CI [0.000, 0.000]
+  S-_2-1  n=    2  agent acc r0..3: 0.333 0.500 0.667 1.000   majority-correct r0..3: 0.000 0.500 1.000 1.000   MV3 CI [1.000, 1.000]
+  S+_2-1  n=   13  agent acc r0..3: 0.667 0.897 0.923 0.872   majority-correct r0..3: 1.000 0.923 0.923 0.846   MV3 CI [0.600, 1.000]
+  S+_3-0  n=  272  agent acc r0..3: 1.000 1.000 1.000 1.000   majority-correct r0..3: 1.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S0      n=    3  agent acc r0..3: 0.222 0.556 0.444 0.444   majority-correct r0..3: 0.000 0.667 0.333 0.333   MV3 CI [0.000, 1.000]
+
+[R2-gsm8k] debate_traces_gsm8k_mistral_small_4_n300 n=300
+  S-_3-0  n=    6  agent acc r0..3: 0.000 0.000 0.000 0.056   majority-correct r0..3: 0.000 0.000 0.000 0.000   MV3 CI [0.000, 0.000]
+  S-_2-1  n=    5  agent acc r0..3: 0.333 0.400 0.600 0.600   majority-correct r0..3: 0.000 0.600 0.600 0.600   MV3 CI [0.000, 1.000]
+  S+_2-1  n=    9  agent acc r0..3: 0.667 0.704 0.815 0.889   majority-correct r0..3: 1.000 0.778 0.778 0.889   MV3 CI [0.625, 1.000]
+  S+_3-0  n=  279  agent acc r0..3: 1.000 1.000 1.000 1.000   majority-correct r0..3: 1.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S0      n=    1  agent acc r0..3: 0.333 1.000 1.000 1.000   majority-correct r0..3: 0.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+
+[R3-think] debate_traces_vllm_q32b_thinkOFF_peer_r3_mt8192_n200 n=200
+  S-_3-0  n=   45  agent acc r0..3: 0.000 0.000 0.015 0.022   majority-correct r0..3: 0.000 0.000 0.022 0.022   MV3 CI [0.000, 0.073]
+  S-_2-1  n=   16  agent acc r0..3: 0.333 0.312 0.396 0.417   majority-correct r0..3: 0.000 0.375 0.375 0.375   MV3 CI [0.133, 0.625]
+  S+_2-1  n=   26  agent acc r0..3: 0.667 0.897 0.923 0.936   majority-correct r0..3: 1.000 1.000 0.962 0.962   MV3 CI [0.870, 1.000]
+  S+_3-0  n=   95  agent acc r0..3: 1.000 1.000 1.000 1.000   majority-correct r0..3: 1.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S0      n=   18  agent acc r0..3: 0.222 0.333 0.389 0.333   majority-correct r0..3: 0.000 0.222 0.389 0.278   MV3 CI [0.077, 0.500]
+
+[R3-think] debate_traces_vllm_q32b_thinkON_peer_r3_mt8192_n200 n=200
+  S-_3-0  n=   46  agent acc r0..3: 0.000 0.000 0.000 0.007   majority-correct r0..3: 0.000 0.000 0.000 0.000   MV3 CI [0.000, 0.000]
+  S-_2-1  n=   10  agent acc r0..3: 0.333 0.233 0.233 0.167   majority-correct r0..3: 0.000 0.200 0.200 0.200   MV3 CI [0.000, 0.500]
+  S+_2-1  n=   26  agent acc r0..3: 0.667 0.795 0.795 0.769   majority-correct r0..3: 1.000 0.846 0.808 0.808   MV3 CI [0.640, 0.945]
+  S+_3-0  n=  108  agent acc r0..3: 1.000 0.994 0.991 0.991   majority-correct r0..3: 1.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S0      n=   10  agent acc r0..3: 0.200 0.267 0.267 0.300   majority-correct r0..3: 0.000 0.300 0.300 0.300   MV3 CI [0.000, 0.625]
+
+[R3-think] debate_traces_vllm_q8b_thinkOFF_peer_r3_mt8192_n200 n=200
+  S-_3-0  n=   46  agent acc r0..3: 0.000 0.007 0.014 0.007   majority-correct r0..3: 0.000 0.000 0.022 0.000   MV3 CI [0.000, 0.000]
+  S-_2-1  n=    8  agent acc r0..3: 0.333 0.458 0.500 0.500   majority-correct r0..3: 0.000 0.500 0.500 0.500   MV3 CI [0.143, 0.875]
+  S+_2-1  n=   41  agent acc r0..3: 0.667 0.854 0.878 0.919   majority-correct r0..3: 1.000 0.927 0.927 0.927   MV3 CI [0.837, 1.000]
+  S+_3-0  n=   85  agent acc r0..3: 1.000 1.000 1.000 1.000   majority-correct r0..3: 1.000 1.000 1.000 1.000   MV3 CI [1.000, 1.000]
+  S0      n=   20  agent acc r0..3: 0.183 0.317 0.333 0.317   majority-correct r0..3: 0.000 0.350 0.350 0.300   MV3 CI [0.100, 0.500]
+
+[R3-think] debate_traces_vllm_q8b_thinkON_peer_r3_mt8192_n200 n=200
+  S-_3-0  n=   51  agent acc r0..3: 0.000 0.078 0.085 0.092   majority-correct r0..3: 0.000 0.059 0.078 0.098   MV3 CI [0.021, 0.191]
+  S-_2-1  n=   15  agent acc r0..3: 0.333 0.444 0.400 0.400   majority-correct r0..3: 0.000 0.400 0.400 0.400   MV3 CI [0.158, 0.667]
+  S+_2-1  n=   17  agent acc r0..3: 0.667 0.765 0.647 0.627   majority-correct r0..3: 1.000 0.765 0.588 0.588   MV3 CI [0.350, 0.824]
+  S+_3-0  n=  106  agent acc r0..3: 1.000 0.991 0.991 0.991   majority-correct r0..3: 1.000 0.991 0.991 0.991   MV3 CI [0.970, 1.000]
+  S0      n=   11  agent acc r0..3: 0.212 0.455 0.515 0.485   majority-correct r0..3: 0.000 0.455 0.545 0.455   MV3 CI [0.154, 0.769]
+
+Across 16 files: Pearson r(MV0, D1=MV3-MV0) = -0.740; D1 ~ +0.303 -0.354*MV0
+Primary 6: gemini_3-flash: MV0=0.845 D1=+0.010; openai_gpt-5.4-mini: MV0=0.705 D1=+0.050; vllm_llama-3.1-8b: MV0=0.468 D1=+0.028; vllm_phi-4-mini: MV0=0.468 D1=+0.063; vllm_qwen3-4b: MV0=0.435 D1=+0.205; vllm_qwen3-8b: MV0=0.245 D1=+0.375
